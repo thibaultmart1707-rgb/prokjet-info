@@ -10,10 +10,21 @@ from cpiece import PieceFactory
 
 
 class Echiquier:
+    """
+     Gère la logique du jeu : état de la grille, tour de jeu et règles.
+     Contient une matrice 8x8 d'objets de type Piece.
+     """ 
     def __init__(self):
+        """Initialise un plateau et définit le premier tour aux blancs."""
         self.grille = [[None for _ in range(8)] for _ in range(8)]
         self.tour = "blanc"
     def deplacer_piece(self, depart, arrivee):
+        """
+      Permet de déplacer une pièce. Vérifie la légalité et l'état d'échec.
+      :param depart: tuple (ligne, col) d'origine.
+      :param arrivee: tuple (ligne, col) de destination.
+      :return: True si le mouvement est validé, False sinon.
+      """
         piece = self.grille[depart[0]][depart[1]]
 
         if piece is None:
@@ -53,6 +64,7 @@ class Echiquier:
         
     
     def trouver_roi(self, couleur):
+         """Parcourt la grille pour localiser le Roi d'une couleur donnée."""
             for l in range(8):
                 for c in range(8):
                     piece = self.grille[l][c]
@@ -60,6 +72,7 @@ class Echiquier:
                         return (l, c)
             return None
     def case_attaquee(self, ligne, col, couleur_adverse):
+         """Parcours le grille pour voir si une pièce peut attaquée."""
         for l in range(8):
             for c in range(8):
                 piece = self.grille[l][c]
@@ -70,6 +83,7 @@ class Echiquier:
 
     
     def roi_en_echec(self, couleur):
+         """Détermine si le Roi de la couleur indiquée est attaqué."""
         roi_pos = self.trouver_roi(couleur)
         if roi_pos is None:
             print('échec')
@@ -82,6 +96,7 @@ class Echiquier:
     
     
     def coups_possibles(self, couleur):
+        """Calcule l'intégralité des coups légaux pour un joueur."""
         coups = []
     
         for l in range(8):
@@ -112,6 +127,7 @@ class Echiquier:
     
         return coups
     def est_echec_et_mat(self, couleur):
+        """Vérifie si le joueur est en échec et n'a plus aucune issue."""
         if not self.roi_en_echec(couleur):
             return False
     
