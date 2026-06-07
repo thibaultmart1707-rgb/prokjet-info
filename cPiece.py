@@ -6,12 +6,24 @@
 
 
 class Piece:
+    """Gere les paramètres des pièces comme la couleur, la position et les mouvements possibles (méthode)"""
     def __init__(self, couleur, position):
+        """
+        Initialise les attributs de base d'une pièce d'échecs.
+        -param couleur: str ("blanc" ou "noir").
+        -param position: tuple (ligne, col) sur l'échiquier.
+        -return: None
+        """
         self.couleur = couleur
         self.position = position
-        self.symbole = "?"
+        self.symbole = "?" #c'est seulement utilisé pour l'affichage
 
     def mouvements_possibles(self, echiquier):
+        """
+        Calcule les mouvements de base autorisés pour la pièce. Méthode générique à surcharger.
+        -param echiquier: Instance de la classe Echiquier permettant de voir la position des autres pièces.
+        -return: list de tuples (ligne, col) des cases accessibles.
+        """
         return []
 
 
@@ -190,24 +202,3 @@ class Pion(Piece):
         return mouvements
     
     
-    
-    
-
-class PieceFactory:
-    """
-    Design Pattern Factory : Centralise la création des objets pièces.
-    Très utile pour recréer le plateau depuis une sauvegarde JSON.
-    """
-    @staticmethod
-    def creer_piece(type_piece, couleur, position):
-        pieces_disponibles = {
-            "Pion": Pion,
-            "Tour": Tour,
-            "Cavalier": Cavalier,
-            "Fou": Fou,
-            "Reine": Reine,
-            "Roi": Roi
-        }
-        if type_piece in pieces_disponibles:
-            return pieces_disponibles[type_piece](couleur, position)
-        return None
