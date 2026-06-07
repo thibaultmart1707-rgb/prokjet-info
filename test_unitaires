@@ -1,1 +1,57 @@
+# -*- coding: utf-8 -*-
+"""
+Tests unitaires du projet d'échecs.
+"""
+import unittest
+from cechiquier import Echiquier
+from cpiece import Pion, Roi, Tour
+from cordi import ORDI
 
+class TestEchecs(unittest.TestCase):
+
+    def setUp(self):
+        """Initialise un échiquier vide avant chaque test."""
+        self.ech = Echiquier()
+
+    # Méthode testée 1 : mouvements_possibles (Pion)
+    def test_pion_mouvements(self):
+        pion = Pion("blanc", (1, 0))
+        self.ech.grille[1][0] = pion
+        # Cas 1 : Départ, peut avancer de 1 ou 2 cases
+        self.assertIn((2, 0), pion.mouvements_possibles(self.ech))
+        self.assertIn((3, 0), pion.mouvements_possibles(self.ech))
+        # Cas 2 : Bloqué par une pièce amie
+        self.ech.grille[2][0] = Tour("blanc", (2, 0))
+        self.assertNotIn((2, 0), pion.mouvements_possibles(self.ech))
+
+    # Méthode testée 2 : roi_en_echec
+    def test_roi_en_echec(self):
+        roi = Roi("blanc", (0, 0))
+        self.ech.grille[0][0] = roi
+        # Cas 1 : Pas en échec
+        self.assertFalse(self.ech.roi_en_echec("blanc"))
+        # Cas 2 : En échec (menacé par une tour noire)
+        self.ech.grille[0][7] = Tour("noir", (0, 7))
+        self.assertTrue(self.ech.roi_en_echec("blanc"))
+
+    # Méthode testée 3 : deplacer_piece
+    def test_deplacer_piece(self):
+        tour = Tour("blanc", (0, 0))
+        self.ech.grille[0][0] = tour
+        self.ech.tour = "blanc"
+        # Cas 1 : Déplacement valide
+        self.assertTrue(self.ech.deplacer_piece((0, 0), (0, 5)))
+        # Cas 2 : Déplacement invalide (ce n'est plus au tour des blancs)
+        self.assertFalse(self.ech.deplacer_piece((0, 5), (0, 6)))
+
+    # Méthode testée 4 : evaluer_plateau (ordi)
+    def test_evaluer_plateau(self):
+        ordi = ORDI(couleur="noir")
+        # Cas 1 : Plateau vide = 0
+        self.assertEqual(ordi.evaluer_plateau(self.ech), 0)
+        # Cas 2 : Avantage noir (+50 pour une tour)
+        self.ech.grille[0][0] = Tour("noir", (0, 0))
+        self.assertEqual(ordi.evaluer_plateau(self.ech), 50)
+
+if __name__ == '__main__':
+    unittest.main()
