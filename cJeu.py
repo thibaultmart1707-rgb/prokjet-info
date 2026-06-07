@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
-"""
-
-@author: Gaudin Timothé & Martin thibault
-"""
-
 from cpiece import *
 from cechiquier import *
 from cinterface import *
 
 def initialiser_plateau():
+    """
+    Initialise le plateau avec la position réglementaire des pièces au début d'une partie.
+    -return: Instance de la classe Echiquier complètement initialisée.
+    """
     plateau = Echiquier()
 
-    # Pièces blanches
     plateau.grille[0][0] = Tour("blanc", (0, 0))
     plateau.grille[0][1] = Cavalier("blanc", (0, 1))
     plateau.grille[0][2] = Fou("blanc", (0, 2))
@@ -23,8 +20,7 @@ def initialiser_plateau():
 
     for col in range(8):
         plateau.grille[1][col] = Pion("blanc", (1, col))
-
-    # Pièces noires
+    
     plateau.grille[7][0] = Tour("noir", (7, 0))
     plateau.grille[7][1] = Cavalier("noir", (7, 1))
     plateau.grille[7][2] = Fou("noir", (7, 2))
@@ -42,4 +38,6 @@ def initialiser_plateau():
 
 if __name__ == "__main__":
     plateau = initialiser_plateau()
-    InterfaceEchecs(plateau)
+    InterfaceEchecs(plateau)# -*- coding: utf-8 -*-
+"""
+
