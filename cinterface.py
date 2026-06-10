@@ -9,7 +9,7 @@ from cordi import ORDI
 import json
 from cmemen import *
     
-class InterfaceEchecs:
+class InterfaceEchecs: #@author: Timothé Gaudin
     """permet de gérer l'affichage du jeu ainsi que l'interaction utilisateur, on a dans les variables d'instance, l'échiquier, les paramètres de l'ordi, la fenêtre d'affichage etc"""
     def __init__(self, echiquier):
         """
@@ -61,7 +61,7 @@ class InterfaceEchecs:
         
      
     
-    def demander_mode_jeu(self):
+    def demander_mode_jeu(self): #@author: Timothé Gaudin
         """
         Pour choisir le mode de jeu (2 joueurs ou contre l'ordi) au démarrage via une pop-up.
         -return: None
@@ -92,7 +92,7 @@ class InterfaceEchecs:
         self.fenetre.wait_window(popup)  # Met le reste de l'initialisation en pause
         
         
-    def demander_difficulte(self):
+    def demander_difficulte(self): #@author: Timothé Gaudin
         """
         Affiche une pop-up pour choisir le niveau de l'ordinateur (profondeur du Minimax).
         -return: None
@@ -114,7 +114,7 @@ class InterfaceEchecs:
             ("Expert (Profondeur 4)", 4, "#e0a6ae")
         ]
         
-        def configurer_niveau(prof):
+        def configurer_niveau(prof): #@author: Timothé Gaudin
             self.profondeur_ordi = prof
             popup.destroy()
             
@@ -131,7 +131,7 @@ class InterfaceEchecs:
             
         self.fenetre.wait_window(popup)  # Met l'initialisation en pause tant que le choix n'est pas fait    
 
-    def dessiner_plateau(self):
+    def dessiner_plateau(self): #@author: Timothé Gaudin
         """
         Permet de dessiner le plateau graphique, les pièces et la surbrillance des sélections/mouvements valides.
         -return: None
@@ -177,7 +177,7 @@ class InterfaceEchecs:
         mode_texte = "vs ORDI" if self.mode_jeu == "ordi" else "à 2"
         self.label_tour.config(text=f"Tour : {self.echiquier.tour} ({mode_texte})")
 
-    def clic(self, event):
+    def clic(self, event): #@author: Timothé Gaudin
         """
         Cette méthode est lancée dès qu'un clic est détecté. Gère la sélection de pièce ou le déplacement.
         -param event: Objet événement généré par Tkinter contenant les attributs x et y du clic.
@@ -208,7 +208,7 @@ class InterfaceEchecs:
             if self.mode_jeu == "ordi":
                 self.fenetre.after(100, self.tour_ordi)
     
-    def tour_ordi(self):
+    def tour_ordi(self): #@author: Timothé Gaudin
         """
         Gère le tour de l'ordinateur en effectuant le coup choisi par l'algorithme Minimax ou par sécurité.
         -return: None
@@ -227,7 +227,7 @@ class InterfaceEchecs:
                     self.echiquier.deplacer_piece(cp[0][0], cp[0][1])#dans ce cas, on prend un coup au hasard
                     self.dessiner_plateau()
                     
-    def sauvegarder_partie(self):
+    def sauvegarder_partie(self): #@author: Thibault Martin
         """
         Stockage de données dans un fichier JSON pour sauvegarder l'état actuel.
         -return: None
@@ -240,7 +240,7 @@ class InterfaceEchecs:
             json.dump(data, f)
         self.label_tour.config(text="Partie sauvegardée !")
 
-    def charger_partie(self):
+    def charger_partie(self): #@author: Thibault Martin
         """
         Stockage de données (JSON) : lit le fichier de sauvegarde s'il existe et met à jour l'échiquier.
         -return: None
@@ -253,17 +253,16 @@ class InterfaceEchecs:
         except FileNotFoundError:
             self.label_tour.config(text="Aucune sauvegarde trouvée.")
             
-    def annuler_dernier_coup(self):
+    def annuler_dernier_coup(self): #@author: Timothé Gaudin
         """Gère le retour en arrière."""
-        # Si on joue contre l'ordinateur, il faut annuler DEUX coups 
-        # (le coup de l'ordi ET le coup du joueur humain)
+        # Si on joue contre l'ordinateur, il faut annuler DEUX coups (humain et ordi)
         if self.mode_jeu == "ordi":
             # Annule le coup de l'ordi
             if self.echiquier.restaurer_depuis_memento():
                 # Annule ton propre coup
                 self.echiquier.restaurer_depuis_memento()
         else:
-            # En mode 2 joueurs (pvp), on annule juste un seul coup
+            # En mode 2 joueurs, on annule juste un seul coup
             self.echiquier.restaurer_depuis_memento()
             
         self.selection = None
