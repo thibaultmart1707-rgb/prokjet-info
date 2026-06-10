@@ -6,12 +6,12 @@
 from cpiece import *
 from cmemen import *
 
-class Echiquier:
+class Echiquier: 
     """
     Gère la logique du jeu : état de la grille, tour de jeu et règles.
     Contient une matrice 8x8 d'objets de type Piece.
     """
-    def __init__(self):
+    def __init__(self): #@author: Thibault Martin
         """
         Initialise un plateau et définit le premier tour aux blancs.
         -return: None
@@ -19,7 +19,7 @@ class Echiquier:
         self.grille = [[None for _ in range(8)] for _ in range(8)]
         self.tour = "blanc"
         self.historique = []
-    def deplacer_piece(self, depart, arrivee):
+    def deplacer_piece(self, depart, arrivee): #@author: Thibault Martin
         """
         Permet de déplacer une pièce. Vérifie la légalité et l'état d'échec.
         -param depart: tuple (ligne, col) d'origine.
@@ -65,11 +65,11 @@ class Echiquier:
             print(f"ÉCHEC ET MAT ! {piece.couleur} gagne !")
         return True
         
-    def sauvegarder_dans_memento(self):
+    def sauvegarder_dans_memento(self): #@author: Timothé Gaudin
         """Crée un memento de l'état actuel et l'ajoute à l'historique."""
         self.historique.append(Memento(self.grille, self.tour))
 
-    def restaurer_depuis_memento(self):
+    def restaurer_depuis_memento(self):#@author: Timothé Gaudin
         """Recule d'un état en restaurant le dernier memento de l'historique."""
         if not self.historique:
             return False
@@ -85,7 +85,7 @@ class Echiquier:
                     self.grille[l][c].position = (l, c)
         return True
     
-    def trouver_roi(self, couleur):
+    def trouver_roi(self, couleur): #@author: Thibault Martin
         """Parcourt la grille pour localiser le Roi d'une couleur donnée.
         -param couleur: str ("blanc" ou "noir") représentant la couleur du Roi recherché.
         -return: tuple (ligne, col) représentant la position du Roi, ou None si non trouvé."""
@@ -96,7 +96,7 @@ class Echiquier:
                     return (l, c)
         return None
     
-    def case_attaquee(self, ligne, col, couleur_adverse):
+    def case_attaquee(self, ligne, col, couleur_adverse): #@author: Thibault Martin
         """Parcourt la grille pour voir si une la pièce donnée entrée est attaquée par une des pièces adverses.
         -param ligne: int, index de la ligne de la case à vérifier.
         -param col: int, index de la colonne de la case à vérifier.
@@ -112,7 +112,7 @@ class Echiquier:
         
 
     
-    def roi_en_echec(self, couleur):
+    def roi_en_echec(self, couleur): #@author: Thibault Martin
         """Détermine si le Roi de la couleur indiquée est attaqué.
         -param couleur: str ("blanc" ou "noir") représentant la couleur du Roi à vérifier.
         -return: True si le Roi est en échec, False sinon."""
@@ -127,7 +127,7 @@ class Echiquier:
         return self.case_attaquee(ligne, col, adversaire)
     
     
-    def coups_possibles(self, couleur):
+    def coups_possibles(self, couleur): #@author: Thibault Martin
         """Calcule l'intégralité des coups légaux pour un joueur.
         -param couleur: str ("blanc" ou "noir") du joueur dont on veut les coups.
         -return: list de tuples au format ((l_dep, c_dep), (l_arr, c_arr)) listant les coups légaux."""
@@ -158,7 +158,7 @@ class Echiquier:
                             coups.append((depart, arrivee))
     
         return coups
-    def est_echec_et_mat(self, couleur):
+    def est_echec_et_mat(self, couleur): #@author: Thibault Martin
         """
         Vérifie si le joueur est en échec et mat en regardant s'il y a échec ainsi que les coups possibles.
         -param couleur: str ("blanc" ou "noir") du joueur à tester.
@@ -169,7 +169,7 @@ class Echiquier:
     
         return len(self.coups_possibles(couleur)) == 0
     
-    def exporter_etat(self):
+    def exporter_etat(self): #@author: Thibault Martin
         """
         Exporte l'état du plateau sous forme de dictionnaire pour la sauvegarde JSON.
         -return: list de dictionnaires contenant les données de chaque pièce présente sur la grille.
@@ -187,7 +187,7 @@ class Echiquier:
         return etat
     
     
-    def creer_piece(self,type_piece, couleur, position):
+    def creer_piece(self,type_piece, couleur, position): #@author: Thibault Martin
         """
         Méthode utilisée pour reconstruire le plateau lorsque l'on récupère une ancienne partie.
         -param type_piece: str, le nom textuel de la classe de la pièce (ex: "Pion", "Tour").
@@ -207,7 +207,7 @@ class Echiquier:
             return pieces_disponibles[type_piece](couleur, position)
         return None
     
-    def importer_etat(self, data):
+    def importer_etat(self, data): #@author: Thibault Martin
         """
         Reconstruit le plateau depuis un dictionnaire JSON.
         -param data: dict contenant les clés "tour" et "grille" issues du fichier de sauvegarde.
