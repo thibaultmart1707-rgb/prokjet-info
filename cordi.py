@@ -4,7 +4,7 @@
 """
 from cpiece import Pion, Cavalier, Fou, Tour, Reine, Roi
 
-class ORDI:
+class ORDI: #@author: Timothé Gaudin
     """Classe responsable de l’ordinateur qui affronte le joueur. Chaque type de pièce se voit attribuer une valeur en points. Lorsqu’un coup est simulé, le score du plateau résultant est évalué à partir de ces valeurs, ce qui permet de comparer et de classer les différents coups possibles.
     Plus précisément, l’algorithme anticipe plusieurs coups à l’avance. Avec une profondeur de recherche de 1, l’ordinateur teste tous les coups légaux, évalue le score obtenu pour chacun d’eux et choisit celui qui lui est le plus favorable.
     Avec une profondeur de 2, pour chaque coup envisagé par l’ordinateur, on considère ensuite toutes les réponses possibles du joueur. On suppose alors que le joueur choisira le coup qui maximise son propre avantage. Le score associé à un coup de l’ordinateur n’est donc plus simplement celui du plateau obtenu après ce coup, mais celui du plateau résultant après la meilleure réponse possible du joueur.
@@ -14,7 +14,7 @@ class ORDI:
     # Dictionnaire des valeurs des pièces pour l'ordi
     VALEURS = {Pion: 10, Cavalier: 30, Fou: 30, Tour: 50, Reine: 90, Roi: 900}
 
-    def __init__(self, couleur, profondeur):
+    def __init__(self, couleur, profondeur): #@author: Timothé Gaudin
         """
         Initialise l'ordinateur avec sa couleur et sa profondeur de calcul.
         -param couleur: str ("blanc" ou "noir") représentant le camp de l'IA.
@@ -24,7 +24,7 @@ class ORDI:
         self.couleur = couleur
         self.profondeur = profondeur
 
-    def evaluer_plateau(self, echiquier):
+    def evaluer_plateau(self, echiquier): #@author: Timothé Gaudin
         """
         Évalue le score du plateau actuel du point de vue de l'ORDI.
         -param echiquier: Instance de la classe Echiquier.
@@ -42,7 +42,7 @@ class ORDI:
                         score -= val
         return score
 
-    def minimax(self, echiquier, profondeur, alpha, beta, maximisant):
+    def minimax(self, echiquier, profondeur, alpha, beta, maximisant): #@author: Timothé Gaudin
         """
         Fonction récursive permettant de déterminer le meilleur coup à jouer pour l’ordinateur en explorant l’arbre des possibilités jusqu’à une profondeur donnée. Afin de réduire le temps de calcul, l’algorithme utilise l’élagage alpha-bêta, une optimisation qui évite d’explorer certaines branches de l’arbre lorsque celles-ci ne peuvent plus influencer la décision finale.
         Le système d’évaluation attribue un score à chaque position : un score élevé correspond à une situation favorable à l’ordinateur, tandis qu’un score faible, voire négatif, indique un avantage pour le joueur adverse.
@@ -115,7 +115,7 @@ class ORDI:
                
             return min_eval, meilleur_coup
 
-    def choisir_coup(self, echiquier):
+    def choisir_coup(self, echiquier): #@author: Timothé Gaudin
         """
         Permet d'appeler la méthode minimax avec les paramètres d'initialisation corrects.
         -param echiquier: Instance de la classe Echiquier.
