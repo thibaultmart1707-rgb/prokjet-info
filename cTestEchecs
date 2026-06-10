@@ -7,7 +7,7 @@ from cechiquier import Echiquier
 from cpiece import Pion, Roi, Tour
 from cordi import ORDI
 
-class TestEchecs(unittest.TestCase):
+class TestEchecs(unittest.TestCase): #@author: Thibault Martin et Timothé Gaudin
 
     def setUp(self):
         """Initialise un échiquier vide avant chaque test."""
