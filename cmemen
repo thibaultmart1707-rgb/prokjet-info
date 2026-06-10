@@ -1,8 +1,7 @@
 
 import copy
 
-class Memento:
-    """Représente un instantané (snapshot) de l'état de l'échiquier."""
+class Memento: #@author: Timothé Gaudin
     def __init__(self, grille, tour):
         # On fait une copie profonde de la grille pour ne pas partager les références des pièces
         self._grille = copy.deepcopy(grille)
