@@ -7,7 +7,7 @@
 
 class Piece:
     """Gere les paramètres des pièces comme la couleur, la position et les mouvements possibles (méthode)"""
-    def __init__(self, couleur, position):
+    def __init__(self, couleur, position): #@author: Thibault Martin
         """
         Initialise les attributs de base d'une pièce d'échecs.
         -param couleur: str ("blanc" ou "noir").
@@ -18,7 +18,7 @@ class Piece:
         self.position = position
         self.symbole = "?" #c'est seulement utilisé pour l'affichage
 
-    def mouvements_possibles(self, echiquier):
+    def mouvements_possibles(self, echiquier): #@author: Thibault Martin
         """
         Calcule les mouvements de base autorisés pour la pièce. Méthode générique à surcharger.
         -param echiquier: Instance de la classe Echiquier permettant de voir la position des autres pièces.
@@ -27,7 +27,7 @@ class Piece:
         return []
 
 
-class Roi(Piece):
+class Roi(Piece): #@author: Timothé Gaudin
     def __init__(self, couleur, position):
         super().__init__(couleur, position)
         self.symbole = "♔" if couleur == "blanc" else "♚"
@@ -53,7 +53,7 @@ class Roi(Piece):
         return mouvements
 
 
-class Reine(Piece):
+class Reine(Piece): #@author: Thibault Martin
     def __init__(self, couleur, position):
         super().__init__(couleur, position)
         self.symbole = "♕" if couleur == "blanc" else "♛"
@@ -83,7 +83,7 @@ class Reine(Piece):
         return mouvements
 
 
-class Tour(Piece):
+class Tour(Piece): #@author: Timothé Gaudin
     def __init__(self, couleur, position):
         super().__init__(couleur, position)
         self.symbole = "♖" if couleur == "blanc" else "♜"
@@ -110,7 +110,7 @@ class Tour(Piece):
         return mouvements
 
 
-class Fou(Piece):
+class Fou(Piece): #@author: Thibault Martin
     def __init__(self, couleur, position):
         super().__init__(couleur, position)
         self.symbole = "♗" if couleur == "blanc" else "♝"
@@ -137,7 +137,7 @@ class Fou(Piece):
         return mouvements
 
 
-class Cavalier(Piece):
+class Cavalier(Piece): #@author: Thibault Martin
     def __init__(self, couleur, position):
         super().__init__(couleur, position)
         self.symbole = "♘" if couleur == "blanc" else "♞"
@@ -164,7 +164,7 @@ class Cavalier(Piece):
         return mouvements
 
 
-class Pion(Piece):
+class Pion(Piece): #@author: Timothé Gaudin
     def __init__(self, couleur, position):
         super().__init__(couleur, position)
         self.symbole = "♙" if couleur == "blanc" else "♟"
